@@ -1,0 +1,4 @@
+Flask
+pytest
+bandit
+pip-audit
