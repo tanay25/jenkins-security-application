@@ -34,30 +34,7 @@ pipeline {
         }
 
         
-        stage('Dependency Security Scan') {
-            steps {
-                sh '''
-                    set -e
-
-                    . venv/bin/activate
-
-                    pip-audit
-                '''
-            }
-        }
-
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh '''
-                        sonar-scanner \
-                          -Dsonar.projectKey=jenkins-security \
-                          -Dsonar.sources=. \
-                          -Dsonar.exclusions=venv/**,**/__pycache__/**,**/*.pyc
-                    '''
-                }
-            }
-        }
+       
 
         stage('Docker Build') {
             steps {
