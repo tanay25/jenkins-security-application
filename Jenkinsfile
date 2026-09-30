@@ -34,18 +34,19 @@ pipeline {
         }
 
         stage('Unit Testing / Bandit Security Scan') {
-            steps {
-                sh '''
-                    set -e
+        steps {
+        sh '''
+            set -e
+            . venv/bin/activate
 
-                    . venv/bin/activate
+            echo "Running Unit Tests..."
+            python -m pytest
 
-                    bandit -r . \
-                        -x ./venv \
-                        -f txt
-                '''
-            }
-        }
+            echo "Running Bandit Security Scan..."
+            bandit -r . -x ./venv -f txt
+        '''
+    }
+}
 
         stage('Dependency Security Scan') {
             steps {
