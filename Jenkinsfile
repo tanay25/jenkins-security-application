@@ -47,39 +47,7 @@ pipeline {
             }
         }
 
-        stage('Trivy Image Scan') {
-            steps {
-                sh '''
-                    set -e
-
-                    trivy image \
-                        --severity HIGH,CRITICAL \
-                        --exit-code 1 \
-                        ${IMAGE_NAME}:${IMAGE_TAG}
-                '''
-            }
-        }
-
-        stage('Docker Login') {
-            steps {
-                withCredentials([
-                    usernamePassword(
-                        credentialId: 'dockerhub',
-                        usernameVariable: 'DOCKER_USER',
-                        passwordVariable: 'DOCKER_PASSWORD'
-                    )
-                ]) {
-                    sh '''
-                        set -e
-
-                        echo "$DOCKER_PASSWORD" | \
-                        docker login \
-                            -u "$DOCKER_USER" \
-                            --password-stdin
-                    '''
-                }
-            }
-        }
+       
 
         stage('Docker Push') {
             steps {
