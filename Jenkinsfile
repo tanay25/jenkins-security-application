@@ -6,7 +6,6 @@ pipeline {
         IMAGE_NAME = "tanay25/jenkins-security-demo"
         IMAGE_TAG  = "${BUILD_NUMBER}"
     }
-
     stages {
 
         stage('Checkout') {
